@@ -4,7 +4,20 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+
+// ✅ CORS FIX (updated with localhost)
+app.use(cors({
+  origin: [
+    'https://edu-nine-phi.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:5174'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
+app.options('*', cors());
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/futureedu')
