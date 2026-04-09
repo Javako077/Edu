@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const TYPES = [
@@ -39,7 +40,7 @@ export default function Feedback() {
   const headers = { Authorization: `Bearer ${user.token}` };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/feedback/mine', { headers })
+    axios.get(`${API}/api/feedback/mine`, { headers })
       .then(({ data }) => setHistory(data)).catch(() => {});
   }, [submitted]);
 
@@ -49,7 +50,7 @@ export default function Feedback() {
     if (!form.rating) return setError('Please select a rating');
     setLoading(true); setError('');
     try {
-      await axios.post('http://localhost:5000/api/feedback', form, { headers });
+      await axios.post(`${API}/api/feedback`, form, { headers });
       setSubmitted(true);
       setForm({ type: 'suggestion', rating: 0, message: '' });
       setTimeout(() => setSubmitted(false), 4000);

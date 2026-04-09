@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const TOTAL_TIME = 10 * 60; // 10 minutes in seconds
@@ -39,7 +40,7 @@ export default function Quiz() {
     setTimeLeft(TOTAL_TIME); setTimerActive(false);
     try {
       const { data } = await axios.post(
-        'http://localhost:5000/api/quiz/generate',
+        `${API}/api/quiz/generate`,
         { topic, language, count: 10 },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
@@ -65,7 +66,7 @@ export default function Quiz() {
     setScore(s);
     setSubmitted(true);
     await axios.post(
-      'http://localhost:5000/api/quiz/submit',
+      `${API}/api/quiz/submit`,
       { topic, score: s, maxScore: questions.length },
       { headers: { Authorization: `Bearer ${user.token}` } }
     ).catch(() => {});

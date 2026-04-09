@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function Chat() {
@@ -13,7 +14,7 @@ export default function Chat() {
   const recognitionRef = useRef(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/ai/history', {
+    axios.get(`${API}/api/ai/history`, {
       headers: { Authorization: `Bearer ${user.token}` }
     }).then(({ data }) => setMessages(data)).catch(() => {});
   }, [user.token]);
@@ -44,7 +45,7 @@ export default function Chat() {
     setLoading(true);
     try {
       const { data } = await axios.post(
-        'http://localhost:5000/api/ai/chat',
+        `${API}/api/ai/chat`,
         { question, language },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );

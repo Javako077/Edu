@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function Profile() {
@@ -14,7 +15,7 @@ export default function Profile() {
   const headers = { Authorization: `Bearer ${user.token}` };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/profile', { headers })
+    axios.get(`${API}/api/auth/profile`, { headers })
       .then(({ data }) => {
         setProfile(data);
         setForm({ name: data.name, bio: data.bio || '', preferredLanguage: data.preferredLanguage || 'English' });
@@ -26,7 +27,7 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true); setError(''); setSuccess(false);
     try {
-      const { data } = await axios.put('http://localhost:5000/api/auth/profile', form, { headers });
+      const { data } = await axios.put(`${API}/api/auth/profile`, form, { headers });
       setProfile(data);
       updateUser(data.name);
       setEditing(false);

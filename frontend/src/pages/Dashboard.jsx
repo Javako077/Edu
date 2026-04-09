@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
@@ -10,8 +11,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     const headers = { Authorization: `Bearer ${user.token}` };
-    axios.get('http://localhost:5000/api/ai/history', { headers }).then(({ data }) => setHistory(data)).catch(() => {});
-    axios.get('http://localhost:5000/api/performance', { headers }).then(({ data }) => setPerf(data)).catch(() => {});
+    axios.get(`${API}/api/ai/history`, { headers }).then(({ data }) => setHistory(data)).catch(() => {});
+    axios.get(`${API}/api/performance`, { headers }).then(({ data }) => setPerf(data)).catch(() => {});
   }, [user.token]);
 
   const totalQuestions = history.filter(m => m.role === 'user').length;

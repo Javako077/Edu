@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API from '../api';
 import { useAuth } from '../context/AuthContext';
 
 function Bar({ label, value, max, gradient }) {
@@ -26,7 +27,7 @@ export default function Progress() {
   const [perf, setPerf] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/performance', {
+    axios.get(`${API}/api/performance`, {
       headers: { Authorization: `Bearer ${user.token}` }
     }).then(({ data }) => setPerf(data)).catch(() => {});
   }, [user.token]);
