@@ -1,3 +1,3 @@
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'https://edu-ilcz.vercel.app';
 
 export default API_BASE;
