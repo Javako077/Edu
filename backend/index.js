@@ -34,5 +34,8 @@ app.use('/api/feedback', require('./routes/feedback'));
 
 app.get('/', (req, res) => res.send('FutureEdu API running'));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 5001;
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`🚀 Server on http://localhost:${PORT}`));
+}
+module.exports = app;
