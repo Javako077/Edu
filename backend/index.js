@@ -5,18 +5,20 @@ require('dotenv').config();
 
 const app = express();
 
-// ✅ CORS FIX (updated with localhost)
+// ✅ Allow ALL origins (*)
 app.use(cors({
-  origin: [
-    'https://edu-nine-phi.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:5174'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options('*', cors());
+// ✅ Handle preflight (VERY IMPORTANT)
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(200);
+});
 
 app.use(express.json());
 
